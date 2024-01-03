@@ -4,7 +4,7 @@
 # GLOBALS                                                                       #
 #################################################################################
 
-PROJECT_NAME = mlops_mnist
+PROJECT_NAME = mlOps_mnist
 PYTHON_VERSION = 3.10
 PYTHON_INTERPRETER = python
 
@@ -39,6 +39,10 @@ clean:
 ## Process raw data into processed data
 data: requirements
 	$(PYTHON_INTERPRETER) $(PROJECT_NAME)/data/make_dataset.py
+
+## Pun training
+train: requirements
+	$(PYTHON_INTERPRETER) $(PROJECT_NAME)/train_model.py
 
 #################################################################################
 # Documentation RULES                                                           #
