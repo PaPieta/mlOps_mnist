@@ -5,7 +5,7 @@ def make_data():
     """Return train and test dataloaders for MNIST."""
     train_data, train_labels = [ ], [ ]
 
-    for i in range(5):
+    for i in range(9):
         train_data.append(torch.load(f"data/raw/corruptmnist/train_images_{i}.pt"))
         train_labels.append(torch.load(f"data/raw/corruptmnist/train_target_{i}.pt"))
 
