@@ -177,7 +177,7 @@ cython_debug/
 #.idea/
 
 # Exculde data folder contents
-data/*
+data
 models/*
 reports/*
 
