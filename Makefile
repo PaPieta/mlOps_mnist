@@ -42,7 +42,7 @@ data: requirements
 
 ## Pun training
 train: requirements
-	$(PYTHON_INTERPRETER) $(PROJECT_NAME)/train_model.py
+	$(PYTHON_INTERPRETER) $(PROJECT_NAME)/models/train_model.py
 
 #################################################################################
 # Documentation RULES                                                           #

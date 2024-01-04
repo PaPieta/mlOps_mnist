@@ -10,15 +10,15 @@ class MyNeuralNet(torch.nn.Module):
         out_features: number of output features
     
     """
-    def __init__(self, in_features: int, out_features: int) -> None:
+    def __init__(self, model_hparams: dict, in_features: int, out_features: int) -> None:
         super().__init__()
-        self.fc1 = nn.Linear(in_features, 256)
-        self.dr1 = nn.Dropout(p=0.2)
-        self.fc2 = nn.Linear(256, 128)
-        self.dr2 = nn.Dropout(p=0.2)
-        self.fc3 = nn.Linear(128, 64)
-        self.dr3 = nn.Dropout(p=0.2)
-        self.fc4 = nn.Linear(64, out_features)
+        self.fc1 = nn.Linear(in_features, model_hparams['l1_dim'])
+        self.dr1 = nn.Dropout(p=model_hparams['dropout_rate'])
+        self.fc2 = nn.Linear(model_hparams['l1_dim'], model_hparams['l2_dim'])
+        self.dr2 = nn.Dropout(p=model_hparams['dropout_rate'])
+        self.fc3 = nn.Linear(model_hparams['l2_dim'], model_hparams['l3_dim'])
+        self.dr3 = nn.Dropout(p=model_hparams['dropout_rate'])
+        self.fc4 = nn.Linear(model_hparams['l3_dim'], out_features)
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward pass of the model.

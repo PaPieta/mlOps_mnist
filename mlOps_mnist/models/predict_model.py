@@ -1,7 +1,8 @@
 import torch
 import click
 
-from mlOps_mnist.models import model
+# from mlOps_mnist.models import model
+import model
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -13,9 +14,9 @@ def predict(model_path, data_path):
     print("Predicting model on data")
 
     net = model.MyNeuralNet(784,10).to(device)
-    net.load_state_dict(torch.load(model_path))
+    net.load_state_dict(torch.load(model_path,map_location=torch.device('cpu')))
     net.eval()
-    data = torch.load(data_path)
+    data = torch.load(data_path,map_location=torch.device('cpu'))
 
     # Normalize the input data
     data = (data - data.mean()) / data.std()
