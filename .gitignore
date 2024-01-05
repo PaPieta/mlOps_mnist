@@ -181,4 +181,6 @@ cython_debug/
 models/*
 reports/*
 outputs
-
+wandb
+lightning_logs
+```

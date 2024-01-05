@@ -11,6 +11,10 @@ import torch
 from omegaconf import OmegaConf
 from torch import nn
 
+import wandb
+
+wandb.init(project="fashion_mnist_mlops", entity="pawel-pieta")
+
 log = logging.getLogger(__name__)
 
 log.info(f"Cuda available: {torch.cuda.is_available()}")
@@ -47,6 +51,7 @@ def train(config):
             optimizer.step()
         log.info(f"Epoch {epoch} Loss {loss}")
         loss_list.append(loss.cpu().detach().numpy())
+        wandb.log({"loss": loss})
 
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     model_savepath = "models/" + timestamp
@@ -55,7 +60,7 @@ def train(config):
     torch.save(net.state_dict(), f"{model_savepath}/model.pth")
     log.info(f"Model saved to {model_savepath}/model.pth")
 
-    plt.figure()
+    fig = plt.figure()
     plt.plot(loss_list)
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
@@ -65,6 +70,8 @@ def train(config):
     os.makedirs(fig_savepath)
     plt.savefig(f"{fig_savepath}/loss.pdf")
     log.info(f"Loss figure saved to {fig_savepath}/loss.pdf")
+
+    # wandb.log({"Test loss plot": fig})
 
 
 if __name__ == "__main__":
