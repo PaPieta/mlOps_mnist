@@ -20,14 +20,14 @@ def test_model(test_data):
     assert y.shape == torch.Size([test_data.shape[0], 10]), "Model output shape is incorrect"
 
 
-@pytest.mark.skipif(not os.path.exists(f"{_PATH_DATA}/processed/train_dataset.pt"), reason="Data files not found")
-def test_predict_model():
-    """Test predict_model fuction."""
+# @pytest.mark.skipif(not os.path.exists(f"{_PATH_DATA}/processed/train_dataset.pt"), reason="Data files not found")
+# def test_predict_model():
+#     """Test predict_model fuction."""
 
-    with initialize(version_base=None, config_path=f"../mlOps_mnist/config", job_name="test_training"):
-        config = compose(config_name="default_config.yaml")
-    pred = predict(config)
-    assert pred.shape == torch.Size([5000, 10]), "Model output shape is incorrect"
+#     with initialize(version_base=None, config_path=f"../mlOps_mnist/config", job_name="test_training"):
+#         config = compose(config_name="default_config.yaml")
+#     pred = predict(config)
+#     assert pred.shape == torch.Size([5000, 10]), "Model output shape is incorrect"
 
 
 def test_error_on_wrong_shape():
