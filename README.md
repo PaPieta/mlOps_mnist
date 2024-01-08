@@ -14,7 +14,7 @@ make train
 ```
 Prediction (example):
 ```
-python mlOps_mnist/models/predict_model.py -model_path=models/{name}/model.pth -data_path=data/raw/corruptmnist/test_images.pt
+python mlOps_mnist/models/predict_model.py -model.model_pred_path=models/{name}/model.pth -train.test_dataset_path=data/raw/corruptmnist/test_images.pt
 ```
 Visualization (example):
 ```

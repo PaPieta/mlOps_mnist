@@ -1,28 +1,27 @@
 import click
+import hydra
 
-# from mlOps_mnist.models import model
-import model
+# import model
 import torch
+
+from mlOps_mnist.models import model
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-@click.command()
-@click.option("-model_path", prompt="Model path", help="Path to the model.")
-@click.option("-data_path", prompt="Data path", help="Path to the data to be processed.")
-def predict(model_path, data_path):
+@hydra.main(config_path="../config", config_name="default_config.yaml", version_base=None)
+def predict(config):
     """Predict model on data."""
     print("Predicting model on data")
+    model_hparams = config.model
+    train_hparams = config.train
 
-    net = model.MyNeuralNet(784, 10).to(device)
-    net.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
+    net = model.MyNeuralNet(model_hparams, train_hparams["x_dim"], train_hparams["class_num"]).to(device)
+    net.load_state_dict(torch.load(model_hparams["model_pred_path"], map_location=torch.device("cpu")))
     net.eval()
-    data = torch.load(data_path, map_location=torch.device("cpu"))
+    data = torch.load(train_hparams["test_dataset_path"], map_location=torch.device("cpu"))
 
-    # Normalize the input data
-    data = (data - data.mean()) / data.std()
-
-    pred = net(data.to(device)).cpu().detach()
+    pred = net(data[:][0].to(device)).cpu().detach()
 
     click.echo(torch.argmax(pred, dim=1))
     return pred

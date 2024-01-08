@@ -5,22 +5,22 @@ import os
 import hydra
 import matplotlib.pyplot as plt
 
-# from mlOps_mnist.models import model
-import model
+# import model
 import torch
 from omegaconf import OmegaConf
 from torch import nn
 
 import wandb
+from mlOps_mnist.models import model
 
-wandb.init(project="fashion_mnist_mlops", entity="pawel-pieta")
+wandb.init(project="fashion_mnist_mlops")
 
 log = logging.getLogger(__name__)
 
 log.info(f"Cuda available: {torch.cuda.is_available()}")
 
 
-@hydra.main(config_path="../config", config_name="default_config.yaml")
+@hydra.main(config_path="../config", config_name="default_config.yaml", version_base=None)
 def train(config):
     """Train FNN on MNIST"""
     print(f"configuration: \n {OmegaConf.to_yaml(config)}")
@@ -70,6 +70,8 @@ def train(config):
     os.makedirs(fig_savepath)
     plt.savefig(f"{fig_savepath}/loss.pdf")
     log.info(f"Loss figure saved to {fig_savepath}/loss.pdf")
+
+    return net, loss_list, model_savepath, fig_savepath
 
     # wandb.log({"Test loss plot": fig})
 

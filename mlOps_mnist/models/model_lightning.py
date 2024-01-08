@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
-from torch import nn, optim
 from pytorch_lightning import LightningModule
+from torch import nn, optim
 
 
 class MyNeuralNet(LightningModule):
@@ -12,6 +12,7 @@ class MyNeuralNet(LightningModule):
         out_features: number of output features
 
     """
+
     def __init__(self, model_hparams: dict, in_features: int, out_features: int) -> None:
         super().__init__()
         self.backbone = nn.Sequential(
@@ -47,12 +48,12 @@ class MyNeuralNet(LightningModule):
         x = self.backbone(x)
         x = self.classifier(x)
         return x
-    
+
     def training_step(self, batch, batch_idx):
         data, target = batch
         output = self(data)
         loss = self.criteriun(output, target)
-        self.log('loss', loss)
+        self.log("loss", loss)
         return loss
 
     def configure_optimizers(self):
