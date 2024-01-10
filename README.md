@@ -1,6 +1,6 @@
 # mlOps_mnist
 
-Machine Learning Operations course MNIST project.
+Machine Learning Operations course MNIST project
 
 ## How to run the code
 
